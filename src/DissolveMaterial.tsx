@@ -82,6 +82,8 @@ export function DissolveMaterial({
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader as string}
                 uniforms={uniforms.current}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 transparent
             />
         </>
