@@ -13,9 +13,16 @@ export default function Kitt({ visible }: Props) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const model: any = useGLTF('./kitt.glb')
 
-    useFrame((_state, delta) => {
+    const radius = 6 // Radius of the circular path
+    const speed = 0.1 // Speed of rotation
+
+    useFrame((state) => {
         if (car.current) {
-            car.current.rotation.z += delta * 0.2
+            const elapsedTime = state.clock.getElapsedTime()
+            const x = radius * Math.sin(elapsedTime * speed)
+            const z = radius * Math.cos(elapsedTime * speed)
+            state.camera.position.set(x, 1.8, z)
+            state.camera.lookAt(car.current.position)
         }
     })
     return (
@@ -27,6 +34,7 @@ export default function Kitt({ visible }: Props) {
                 material={model.materials['rr.KR.Base']}
             >
                 <DissolveMaterial
+                    duration={2.1}
                     baseMaterial={model.materials['rr.KR.Base']}
                     visible={visible}
                     color="#ef4444"
